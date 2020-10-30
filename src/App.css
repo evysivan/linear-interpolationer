@@ -1,38 +1,26 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  width: 100vw;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background: linear-gradient(to top, #c9d6ff, #e2e2e2);
+  /* background: linear-gradient(to top, #1c92d2, #f2fcfe); */
+  /* background: linear-gradient(to top, #6190e8, #a7bfe8); */
+  background: linear-gradient(to bottom, #bdc3c7, #2c3e50);
 }
 
-.App-link {
-  color: #61dafb;
+p {
+  margin: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 5px;
+  margin-top: 20px;
+}
+
+.MuiTableCell-root {
+  border-color: black !important;
 }

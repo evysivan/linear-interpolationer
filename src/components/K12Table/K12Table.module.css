@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tableMainHead {
+  /* display: flex; */
+  justify-content: center;
+}
+.textFieldContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: #dddddd !important;
+}
+.tableContainer {
+  width: 90vw !important;
+  margin: 20px;
+  background-color: #dddddd !important;
+  border-radius: 20px;
+}
+.textField {
+  margin: 10px !important;
+}
+
+.result {
+  padding: 10px;
+  margin: 10px !important;
+  background-color: #dddddd !important;
+  border-radius: 20px;
+}
+.errorMessage {
+  font-size: large;
+  font-weight: 600;
+  color: black;
+}
