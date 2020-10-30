@@ -33,6 +33,12 @@ function K12Table() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onFserChange = (givenFser) => {
+    if (!givenFser) {
+      setErrorMessage("No input");
+      setResult(0);
+      setInputText(givenFser);
+      return;
+    }
     if (givenFser > 700 || givenFser < 3) {
       setErrorMessage("Number out of bounds");
       setResult(0);
@@ -42,8 +48,9 @@ function K12Table() {
     setErrorMessage("");
 
     const point1Index = tableValues.findIndex(
-      (value) => value.fser < givenFser || Number(value.fser) === givenFser
+      (value) => value.fser < givenFser || value.fser == givenFser
     );
+    console.log(point1Index);
     if (point1Index === 0) {
       setResult(tableValues[0].k12);
       setInputText(givenFser);

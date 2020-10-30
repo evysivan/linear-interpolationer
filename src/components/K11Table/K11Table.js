@@ -47,10 +47,10 @@ function K11Table() {
 
   const onSubmit = () => {
     const htfTopIndex = htfValues.findIndex(
-      (value) => value > htf || Number(value) === htf
+      (value) => value > htf || value == htf
     );
     const bfbwBottomIndex = bfbwValues.findIndex(
-      (value) => value < bfbw || Number(value) === bfbw
+      (value) => value < bfbw || value == bfbw
     );
 
     if (htfTopIndex === 0) {
@@ -104,22 +104,22 @@ function K11Table() {
               <TableCell
                 style={{
                   position: "absolute",
-                  left: "45%",
-                  padding: "15px 80px",
+                  left: "calc(50% - 200px)",
+                  padding: "15px 200px",
                 }}
               >
                 bf/bw
               </TableCell>
             </TableRow>
           </TableHead>
-          {/* <TableHead> */}
-          <TableRow>
-            <TableCell>h/tf</TableCell>
-            {bfbwValues.map((value) => (
-              <TableCell key={value}>{value}</TableCell>
-            ))}
-          </TableRow>
-          {/* </TableHead> */}
+          <TableHead>
+            <TableRow>
+              <TableCell>h/tf</TableCell>
+              {bfbwValues.map((value) => (
+                <TableCell key={value}>{value}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
           <TableBody>
             {htfValues.map((value, index) => (
               <TableRow key={value}>
