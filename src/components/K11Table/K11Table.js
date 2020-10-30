@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import styles from "./K11Table.module.css";
 import { TextField } from "@material-ui/core";
-import { tableInterpolation } from "../../utils";
+import { tableInterpolation, interpolation } from "../../utils";
 import Button from "@material-ui/core/Button";
 
 const htfValues = [1, 2, 5, 7, 10];
@@ -31,7 +29,6 @@ function K11Table() {
   const [errorMessage2, setErrorMessage2] = useState("");
 
   const onHtfChange = (value) => {
-    console.log(value);
     if (value < 1 || value > 10) {
       setErrorMessage1("h/tf out of bounds");
     } else {
@@ -40,7 +37,6 @@ function K11Table() {
     setHtf(value);
   };
   const onBfbwChange = (value) => {
-    console.log(value);
     if (value < 1 || value > 10) {
       setErrorMessage2("bf/bw out of bounds");
     } else {
@@ -51,11 +47,28 @@ function K11Table() {
 
   const onSubmit = () => {
     const htfTopIndex = htfValues.findIndex(
-      (value) => value > htf || value == htf
+      (value) => value > htf || Number(value) === htf
     );
     const bfbwBottomIndex = bfbwValues.findIndex(
-      (value) => value < bfbw || value == bfbw
+      (value) => value < bfbw || Number(value) === bfbw
     );
+
+    if (htfTopIndex === 0) {
+      setResult(1);
+      return;
+    }
+    if (bfbwBottomIndex === 0) {
+      setResult(
+        interpolation(
+          htfValues[htfTopIndex - 1],
+          k11Values[htfTopIndex - 1][0],
+          htfValues[htfTopIndex],
+          k11Values[htfTopIndex][0],
+          htf
+        )
+      );
+      return;
+    }
 
     const result = tableInterpolation(
       bfbwValues[bfbwBottomIndex - 1],
@@ -79,16 +92,34 @@ function K11Table() {
       <TableContainer className={styles.tableContainer}>
         <Table aria-label="simple table">
           <TableHead className={styles.tableBfBwHead}>
-            <span style={{ position: "absolute", left: "50%" }}>bf/bw</span>
-          </TableHead>
-          <TableHead>
-            <TableRow>
-              <TableCell>h/tf</TableCell>
-              {bfbwValues.map((value) => (
-                <TableCell key={value}>{value}</TableCell>
-              ))}
+            <TableRow
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+                boxSizing: "border-box",
+              }}
+            >
+              <TableCell style={{ border: 0, margin: 10 }}></TableCell>
+              <TableCell
+                style={{
+                  position: "absolute",
+                  left: "45%",
+                  padding: "15px 80px",
+                }}
+              >
+                bf/bw
+              </TableCell>
             </TableRow>
           </TableHead>
+          {/* <TableHead> */}
+          <TableRow>
+            <TableCell>h/tf</TableCell>
+            {bfbwValues.map((value) => (
+              <TableCell key={value}>{value}</TableCell>
+            ))}
+          </TableRow>
+          {/* </TableHead> */}
           <TableBody>
             {htfValues.map((value, index) => (
               <TableRow key={value}>
@@ -124,13 +155,14 @@ function K11Table() {
             }}
           />
           <Button
+            className={styles.calcButton}
             disabled={
               !htf || !bfbw || errorMessage1 !== "" || errorMessage2 !== ""
             }
             variant="contained"
             onClick={onSubmit}
           >
-            Send
+            Calculate
           </Button>
         </div>
         <p className={styles.errorMessage}>

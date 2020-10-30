@@ -1,25 +1,13 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import styles from "./K12Table.module.css";
 import { TextField } from "@material-ui/core";
 import { interpolation } from "../../utils";
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
 
 const tableValues = [
   { fser: 700, k12: 5.9 },
@@ -40,13 +28,11 @@ const tableValues = [
 ];
 
 function K12Table() {
-  const classes = useStyles();
   const [inputText, setInputText] = useState("");
   const [result, setResult] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const onFserChange = (givenFser) => {
-    // console.log(givenFser);
     if (givenFser > 700 || givenFser < 3) {
       setErrorMessage("Number out of bounds");
       setResult(0);
@@ -56,8 +42,14 @@ function K12Table() {
     setErrorMessage("");
 
     const point1Index = tableValues.findIndex(
-      (value) => value.fser < givenFser || value.fser == givenFser
+      (value) => value.fser < givenFser || Number(value.fser) === givenFser
     );
+    if (point1Index === 0) {
+      setResult(tableValues[0].k12);
+      setInputText(givenFser);
+      return;
+    }
+
     const fser1 = tableValues[point1Index].fser;
     const k1 = tableValues[point1Index].k12;
     const fser2 = tableValues[point1Index - 1].fser;
