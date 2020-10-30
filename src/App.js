@@ -9,6 +9,7 @@ function App() {
       <K12Table />
       <Divider />
       <K11Table />
+      <p>Created by Evyatar Sivan &#169;</p>
     </div>
   );
 }
